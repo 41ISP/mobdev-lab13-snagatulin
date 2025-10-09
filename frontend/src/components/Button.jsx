@@ -1,7 +1,7 @@
-function Button ({children})
+function Button ({children, ...props})
 {
     return (
-        <button className="button">{children}</button>
+        <button {...props} className="button">{children}</button>
     )
 }
 export default Button

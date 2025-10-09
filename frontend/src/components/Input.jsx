@@ -1,7 +1,7 @@
-function Input () 
+function Input ({...props}) 
 {
     return (
-     <input type="text" className="input-field"/>
+     <input {...props} type="text" className="input-field"/>
     )
 }
 export default Input
