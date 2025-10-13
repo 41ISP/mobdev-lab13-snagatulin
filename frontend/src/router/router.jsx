@@ -5,6 +5,7 @@ import Board from "../pages/Board"
 import Layout from "../components/Layout"
 import AuthGuard from "../components/AuthGuard"
 import MyMessages from "../pages/MyMessages"
+import { Logout } from "../pages/Logout"
 export const router = createBrowserRouter([
     {
         path: "/signup",
@@ -14,6 +15,12 @@ export const router = createBrowserRouter([
         path: "/signin",
         element: <SignIn />
     },
+    {  
+    path:"/logout",
+    element:<Logout/>
+
+    },
+
     { 
         path: "/",
         element:<Layout />,
