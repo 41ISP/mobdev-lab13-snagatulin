@@ -1,41 +1,42 @@
-import { useEffect, useState } from "react";
-import MyMessages from "../pages/MyMessages";
-import MessageCard from "./MessageCard";
-import { fetchMessages } from "../api/api";
-import MessageField from "./MessageField";
-import { useUserStore } from "../store/store";
+import { useEffect, useState } from "react"
+import MessageCard from "./MessageCard"
+import { fetchMessages } from "../api/api"
+import MessageField from "./MessageField"
+import { useUserStore } from "../store/store"
+import { useMessageStore } from "../store/UseMessageStore"
 
-function Feed() {
-  const jwt = useUserStore();
-  const [messages, setMessages] = useState(undefined);
+const Feed = ({ myOwn = false }) => {
+    const { messages, getMessages } = useMessageStore();
+    const { jwt } = useUserStore();
 
-  useEffect(() => {
-    const handlemessage = async () => {
-      try {
-        setMessages(await fetchMessages());
-      } catch (err) {
-        console.error(err)
-      }
-    }
-    handlemessage()
-  }, []);
+    useEffect(() => {
+        const handleFetch = async() => {
+            try{
+           await getMessages();
+            } catch(err) {
+                console.error(err)
+            }
+        }
+        handleFetch()
+    }, []);
 
-
-
-  return (
-    <>
-      {jwt && <MessageField />}
-      <div className="messages-section">
-        <div className="container">
-          <h2 className="section-title">Последние сообщения</h2>
-          <div className="messages-grid">
-            {messages && messages.map((message) => (<MessageCard key={message.id} {...message} />))}
-          </div>
+    return (
+        <div className="messages-section">
+            <div className="container">
+                <h2 className="section-title">Последние сообщения</h2>
+                <div className="messages-grid">
+                    {!myOwn
+                        ? messages && messages.map((message) => (
+                            <MessageCard key={message.id} {...message} />
+                        ))
+                        : messages.filter((message) => message.userId == jwt.userId).map((message) => (
+                                <MessageCard key={message.id} {...message} />
+                            ))}
+                </div>
+            </div>
         </div>
-      </div>
-    </>
     )
 }
 
-export default Feed;
 
+export default Feed

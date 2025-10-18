@@ -3,39 +3,35 @@ import SignUp from "../pages/SignUp"
 import SignIn from "../pages/SignIn"
 import Board from "../pages/Board"
 import Layout from "../components/Layout"
-import AuthGuard from "../components/AuthGuard"
 import MyMessages from "../pages/MyMessages"
-import { Logout } from "../pages/Logout"
+import AuthGuard from "../components/AuthGuard"
+import Logout from "../pages/Logout"
 export const router = createBrowserRouter([
     {
         path: "/signup",
-        element: <SignUp />
+        element: <SignUp />,
     },
     {
         path: "/signin",
-        element: <SignIn />
+        element: <SignIn />,
     },
-    {  
-    path:"/logout",
-    element:<Logout/>
-
+    {
+        path: "/logout",
+        element: <Logout />
     },
-
-    { 
+    {
         path: "/",
-        element:<Layout />,
+        element: <Layout />,
         children: [
+            { index: true, element: <Board /> },
             {
-                index:true, 
-                element: <Board />
-            }, 
-            {
-                path: "my-messages", 
-                element: (<AuthGuard>
-                 <MyMessages/>
-                 </AuthGuard>
-                 ),
+                path: "my-messages",
+                element: (
+                    <AuthGuard>
+                        <MyMessages />
+                    </AuthGuard>
+                ),
             },
         ],
     },
-],)
+])
