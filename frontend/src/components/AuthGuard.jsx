@@ -4,11 +4,15 @@ import { useUserStore } from "../store/store"
 
 const AuthGuard = ({ children }) => {
     const navigate = useNavigate()
-    const {jwt} = useUserStore()
+    const { jwt } = useUserStore()
+
     useEffect(() => {
-        if (!jwt) navigate("/signin")
-    }, [])
-    return children
+        if (!jwt) {
+            navigate("/signin")
+        }
+    }, [jwt, navigate]) 
+
+    return jwt ? children : null 
 }
 
 export default AuthGuard
